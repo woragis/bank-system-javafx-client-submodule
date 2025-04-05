@@ -27,4 +27,28 @@ public class AccountService {
     private String generateAccountNumber() {
         return "ACC" + (int) (Math.random() * 100_000); // Simple example
     }
+
+    public boolean deposit(UUID userId, double amount) {
+        var accountOpt = accountRepo.findByUserId(userId);
+        if (accountOpt.isEmpty() || amount <= 0)
+            return false;
+
+        Account acc = accountOpt.get();
+        acc.deposit(amount); // already logs transaction
+        return true;
+    }
+
+    public boolean withdraw(UUID userId, double amount) {
+        var accountOpt = accountRepo.findByUserId(userId);
+        if (accountOpt.isEmpty() || amount <= 0)
+            return false;
+
+        Account acc = accountOpt.get();
+        if (acc.getBalance() < amount)
+            return false;
+
+        acc.withdraw(amount); // logs transaction
+        return true;
+    }
+
 }
