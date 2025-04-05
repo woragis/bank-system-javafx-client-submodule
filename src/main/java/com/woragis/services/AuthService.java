@@ -29,4 +29,20 @@ public class AuthService {
         String hashed = PasswordUtils.hashPassword(password);
         return userOpt.get().getHashedPassword().equals(hashed);
     }
+
+    public boolean resetPassword(String email, String name, String newPassword) {
+        var userOpt = userRepository.findByEmail(email);
+        if (userOpt.isEmpty())
+            return false;
+
+        User user = userOpt.get();
+        if (!user.getName().equals(name))
+            return false; // Basic identity check
+
+        String hashed = PasswordUtils.hashPassword(newPassword);
+        User updatedUser = new User(user.getName(), user.getEmail(), hashed); // recreate user
+        userRepository.save(updatedUser);
+        return true;
+    }
+
 }
