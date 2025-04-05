@@ -1,5 +1,6 @@
 package com.woragis.services;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.woragis.models.Account;
@@ -78,6 +79,11 @@ public class AccountService {
         from.addTransaction(t);
         to.addTransaction(t);
         return true;
+    }
+
+    public List<Transaction> getTransactionHistory(UUID userId) {
+        var accOpt = accountRepo.findByUserId(userId);
+        return accOpt.map(Account::getTransactions).orElse(List.of());
     }
 
 }
