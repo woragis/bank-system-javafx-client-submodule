@@ -7,6 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,7 +22,14 @@ public class MainApp extends Application {
         // setRoot("primary","");
         Stage stage = new Stage();
 
+        Text bankTitle = new Text("Woragis Bank");
+        bankTitle.setX(80);
+        bankTitle.setY(80);
+        bankTitle.setFont(Font.font("Verdana", 50));
+        bankTitle.setFill(Color.WHITE);
+
         Group root = new Group();
+        root.getChildren().add(bankTitle);
         Scene scene = new Scene(root, Color.BLACK);
 
         stage.setTitle("Woragis Bank");
